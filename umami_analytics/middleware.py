@@ -29,7 +29,6 @@ class UmamiMiddleware(BaseHTTPMiddleware):
     def __init__(self,
                  app: ASGIApp,
                  api_endpoint: str,
-                 token: str,
                  website_id: str,
                  follow_redirects: bool = True,
                  ) -> None:
@@ -38,7 +37,6 @@ class UmamiMiddleware(BaseHTTPMiddleware):
         if not api_endpoint.endswith('/'):
             api_endpoint += '/'
         self.api_endpoint = api_endpoint + 'send'
-        self.token = token
         self.website_id = website_id
         self.follow_redirects = follow_redirects
 

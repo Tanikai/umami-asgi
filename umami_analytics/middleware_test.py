@@ -28,7 +28,7 @@ async def test_analytics_post(httpx_mock: HTTPXMock):
             Route("/feed", endpoint=feed, methods=["GET", "POST"]),
         ],
         middleware=[
-            Middleware(UmamiMiddleware, api_endpoint="https://localhost/api", token="123456", website_id="123456"),
+            Middleware(UmamiMiddleware, api_endpoint="https://localhost/api", website_id="123456"),
         ],
     )
 

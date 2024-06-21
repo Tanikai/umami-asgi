@@ -8,7 +8,6 @@ from umami_analytics.middleware import UmamiMiddleware
 
 config = Config()
 UMAMI_API_ENDPOINT = config('UMAMI_API_ENDPOINT')
-UMAMI_API_TOKEN = config('UMAMI_API_TOKEN')
 UMAMI_SITE_ID = config('UMAMI_SITE_ID')
 
 print(f"UMAMI_API_ENDPOINT: {UMAMI_API_ENDPOINT}")
@@ -26,5 +25,5 @@ app = Starlette(debug=True, routes=[
     Route('/', homepage),
     Route('/feed', feed, methods=['GET', 'POST']),
 ], middleware=[
-    Middleware(UmamiMiddleware, api_endpoint=UMAMI_API_ENDPOINT, token=UMAMI_API_TOKEN, website_id=UMAMI_SITE_ID),
+    Middleware(UmamiMiddleware, api_endpoint=UMAMI_API_ENDPOINT, website_id=UMAMI_SITE_ID),
 ])
