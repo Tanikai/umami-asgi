@@ -1,4 +1,3 @@
-
 # Examples
 uvicorn
 fastapi
@@ -9,3 +8,7 @@ pytest
 pytest-httpx
 trio
 pytest-asyncio
+
+# Building and packaging
+build
+twine
