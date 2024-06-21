@@ -13,6 +13,7 @@ UMAMI_SITE_ID = config('UMAMI_SITE_ID')
 
 print(f"UMAMI_API_ENDPOINT: {UMAMI_API_ENDPOINT}")
 
+
 async def homepage(request):
     return JSONResponse({'hello': 'world'})
 

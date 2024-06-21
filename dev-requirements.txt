@@ -1,6 +1,7 @@
 
 # Examples
 uvicorn
+fastapi
 python-dotenv
 
 # Testing
