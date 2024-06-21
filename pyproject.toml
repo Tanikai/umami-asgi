@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "umami-asgi-middleware"
+description = "A middleware your ASGI application that enables Umami analytics."
+readme = "README.md"
+license = "MIT"
+keywords = ["umami", "analytics", "asgi", "middleware"]
+requires-python = ">=3.8"
+authors = [{name = "Kai Anter", email = "kai@anter.dev"}]
+
+[project.urls]
+Homepage = "https://github.com/Tanikai/umami-asgi-middleware"
+Issues = "https://github.com/Tanikai/umami-asgi-middleware/issues"

@@ -1,0 +1,6 @@
+
+# Testing
+pytest
+pytest-httpx
+trio
+pytest-asyncio
