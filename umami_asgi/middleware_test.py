@@ -6,7 +6,7 @@ from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 from starlette.routing import Route
 from starlette.middleware import Middleware
-from umami_analytics.middleware import UmamiMiddleware
+from umami_asgi.middleware import UmamiMiddleware
 from starlette.testclient import TestClient
 from json import loads
 

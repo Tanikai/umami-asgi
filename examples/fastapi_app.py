@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from starlette.config import Config
-from umami_analytics.middleware import UmamiMiddleware
+from umami_asgi import UmamiMiddleware
 
 config = Config()
 UMAMI_API_ENDPOINT = config('UMAMI_API_ENDPOINT')
