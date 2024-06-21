@@ -13,4 +13,11 @@ class UmamiPayload:
     url: str
     website: str
     name: str
-    data: Optional[dict] = None
+    # currently not used -> asdict() outputs "None" if not set, has to be prevented if this field is used
+    # data: Optional[dict] = None
+
+
+@dataclass
+class UmamiRequest:
+    payload: UmamiPayload
+    type: str = "event"  # currently the only type available

@@ -2,18 +2,23 @@ import httpx
 from starlette.datastructures import MutableHeaders
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.types import ASGIApp
-from .umami_api import UmamiPayload
+from .umami_api import UmamiRequest, UmamiPayload
 from starlette.requests import Request
 from starlette.responses import Response
 from starlette.background import BackgroundTask
 from dataclasses import asdict
 
 
-async def send_umami_payload(api_endpoint: str, payload: UmamiPayload, headers: MutableHeaders, follow_redirects: bool):
+async def send_umami_payload(api_endpoint: str, request_payload: UmamiRequest, headers: MutableHeaders,
+                             follow_redirects: bool):
     async with httpx.AsyncClient() as client:
         try:
-            resp = await client.post(api_endpoint, json=asdict(payload), headers=headers,
-                                     follow_redirects=follow_redirects)
+            resp = await client.post(
+                api_endpoint,
+                json=asdict(request_payload),
+                headers=headers,
+                follow_redirects=follow_redirects
+            )
         except Exception as e:
             # FIXME: How to do exception handling?
             print(f"Error sending umami payload: {e}")
@@ -41,22 +46,27 @@ class UmamiMiddleware(BaseHTTPMiddleware):
         response = await call_next(request)
 
         # create umami payload with request data
-        payload = UmamiPayload(
-            hostname=request.url.hostname,
-            language=request.headers.get('Accept-Language', ''),
-            referrer=request.headers.get('Referer', ''),
-            screen='',
-            title='',
-            url=request.url.path,
-            website=self.website_id,
-            name=request.method,
+        umami_request = UmamiRequest(
+            payload=UmamiPayload(
+                hostname=request.url.hostname,
+                language=request.headers.get('Accept-Language', ''),
+                referrer=request.headers.get('Referer', ''),
+                screen='',
+                title='',
+                url=request.url.path,
+                website=self.website_id,
+                name=request.method,
+            )
         )
 
         # set headers to track IP address correctly
         umami_headers = MutableHeaders()
+        # send proper user agent or request won't be registered
+        umami_headers['User-Agent'] = request.headers['User-Agent']
+        # send IP address of client, not asgi server
         umami_headers['X-Real-IP'] = request.client.host
         umami_headers['X-Forwarded-For'] = request.client.host
-        response.background = BackgroundTask(send_umami_payload, self.api_endpoint, payload, umami_headers,
+        response.background = BackgroundTask(send_umami_payload, self.api_endpoint, umami_request, umami_headers,
                                              self.follow_redirects)
 
         return response
