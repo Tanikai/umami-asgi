@@ -1,4 +1,8 @@
 
+# Examples
+uvicorn
+python-dotenv
+
 # Testing
 pytest
 pytest-httpx

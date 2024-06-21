@@ -1,0 +1,3 @@
+UMAMI_API_ENDPOINT="https://example.com/api"
+UMAMI_API_TOKEN="your-api-token"
+UMAMI_SITE_ID="your-site-id"
