@@ -53,7 +53,6 @@ class UmamiMiddleware(BaseHTTPMiddleware):
                 title='',
                 url=request.url.path,
                 website=self.website_id,
-                name=request.method,
             )
         )
 
