@@ -38,7 +38,7 @@ async def test_analytics_post(httpx_mock: HTTPXMock):
 
         # check whether middleware sent post request to mocked umami
         umami_request = httpx_mock.get_request()
-        umami_payload = loads(umami_request.content.decode("utf-8"))
+        umami_payload = loads(umami_request.content.decode("utf-8"))["payload"]
         assert umami_payload["name"] == "GET"
         assert umami_payload["url"] == "/"
         # check whether middleware set headers correctly to track IP address of client, not asgi server
@@ -49,6 +49,6 @@ async def test_analytics_post(httpx_mock: HTTPXMock):
         assert response.status_code == 200
 
         umami_request = httpx_mock.get_requests()[1]
-        umami_payload = loads(umami_request.content.decode("utf-8"))
+        umami_payload = loads(umami_request.content.decode("utf-8"))["payload"]
         assert umami_payload["name"] == "POST"
         assert umami_payload["url"] == "/feed"
