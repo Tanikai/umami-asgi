@@ -8,7 +8,7 @@ in a GDPR-friendly way, then this middleware is for you.
 
 ## Usage
 
-For this middleware, you need the following information:
+For this middleware, you need (at least) the following information:
 
 - The URL of your Umami API (e.g. `https://umami.example.com/api`
 - The website GUID (e.g. `12345678-1234-1234-1234-123456789012`)
@@ -58,6 +58,24 @@ python -m uvicorn examples.fastapi_app:app --env-file examples/.env
 # Starlette:
 python -m uvicorn examples.starlette_app:app --env-file examples/.env
 ```
+
+## Configuring the Middleware
+
+The middleware has the following configuration options:
+
+| Parameter          | Type                  | Description                                                                                                                                                                |
+|--------------------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `api_url`          | `str`                 | The URL of your Umami API endpoint (e.g. `https://umami.example.com/api`)                                                                                                  |
+| `website_id`       | `str`                 | The GUID of your website in Umami  (e.g. `12345678-1234-1234-1234-123456789012`                                                                                            |
+| `follow_redirects` | `Optional[bool]`      | Determines whether the POST request to the Umami API should follow redirects or not. Default is true.                                                                      |
+| `proxy_enabled`    | `Optional[bool]`      | If true, the middleware trusts the headers `X-Forwarded-For`, `X-Forwarded-Host`, and `X-Real-IP`. Default is false.                                                       |
+| `trusted_proxies`  | `Optional[List[str]]` | Hosts from which the headers mentioned above are trusted. Only used when `proxy_enabled` is set to true. If `0.0.0.0` is included, all hosts are trusted. Default is None. |
+
+## Known issues
+
+- Country tracking does not seem to work properly. If you need this feature,
+  open an issue and I'll take a deeper look into it.
+- Per-endpoint exclusion of tracking is not supported yet.
 
 ## License
 
